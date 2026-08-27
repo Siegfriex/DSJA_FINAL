@@ -2,42 +2,100 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>DSJA FINAL</title>
-  <meta name="description" content="DSJA FINAL 최종 보고서 (PDF)">
+  <meta name="description" content="왜 노인들은 여전히 디지털 사회에서 길을 잃는가? — DSJA_5 team EDGE 최종 보고서">
+  <meta name="theme-color" content="#000000">
   <style>
-    html, body { margin: 0; padding: 0; height: 100%; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
-      background: #111; color: #f2f2f2;
-      display: flex; align-items: center; justify-content: center;
-      min-height: 100vh; padding: 24px; box-sizing: border-box;
-    }
-    main { max-width: 560px; width: 100%; text-align: center; }
-    h1 { font-size: 2.4rem; margin: 0 0 12px; letter-spacing: 0.02em; }
-    p { font-size: 1.1rem; line-height: 1.6; margin: 0 0 28px; color: #cfcfcf; }
-    .btn {
-      display: inline-block; padding: 18px 40px; font-size: 1.25rem; font-weight: 700;
-      color: #111; background: #fff; border-radius: 12px; text-decoration: none;
-    }
-    .btn:hover, .btn:focus { background: #e6e6e6; }
-    .meta { margin-top: 28px; font-size: 0.9rem; color: #8a8a8a; line-height: 1.8; }
-    .meta a { color: #8a8a8a; word-break: break-all; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: #000; color: #eee; overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif; }
+    body { display: flex; flex-direction: column; height: 100dvh; }
+    header { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 10px 16px; padding-top: max(10px, env(safe-area-inset-top)); background: #111; border-bottom: 1px solid #222; }
+    header h1 { font-size: 1rem; margin: 0; font-weight: 700; letter-spacing: .04em; white-space: nowrap; }
+    header .right { display: flex; align-items: center; gap: 12px; font-size: .9rem; color: #aaa; }
+    header a { color: #fff; text-decoration: none; border: 1px solid #444; border-radius: 6px; padding: 5px 10px; white-space: nowrap; }
+    header a:hover { background: #222; }
+    #stage { flex: 1 1 auto; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; touch-action: pan-y; }
+    #stage img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; user-select: none; -webkit-user-drag: none; }
+    .nav { position: absolute; top: 0; bottom: 0; width: 18%; min-width: 56px; border: 0; background: transparent; color: #fff; cursor: pointer; font-size: 2rem; opacity: 0; transition: opacity .2s; }
+    .nav:hover, .nav:focus-visible { opacity: .85; background: linear-gradient(to right, rgba(0,0,0,.5), transparent); }
+    #next:hover, #next:focus-visible { background: linear-gradient(to left, rgba(0,0,0,.5), transparent); }
+    #prev { left: 0; } #next { right: 0; }
+    footer { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 10px 16px; padding-bottom: max(10px, env(safe-area-inset-bottom)); background: #111; border-top: 1px solid #222; }
+    footer button { flex: 0 0 auto; background: #222; color: #fff; border: 1px solid #444; border-radius: 8px; padding: 10px 18px; font-size: 1rem; cursor: pointer; }
+    footer button:disabled { opacity: .35; cursor: default; }
+    footer input[type=range] { flex: 1 1 auto; min-width: 0; accent-color: #fff; }
+    #counter { flex: 0 0 auto; font-variant-numeric: tabular-nums; color: #aaa; min-width: 4.5em; text-align: center; }
     @media (max-width: 480px) {
-      h1 { font-size: 1.9rem; }
-      .btn { display: block; padding: 18px 20px; }
+      header .right span { display: none; }
+      footer button { padding: 10px 14px; }
     }
   </style>
 </head>
 <body>
-  <main>
+  <header>
     <h1>DSJA FINAL</h1>
-    <p>DSJA_5 team EDGE 최종 보고서입니다.<br>아래 버튼을 누르면 PDF가 새 탭에서 열립니다.</p>
-    <a class="btn" href="./report/DSJA_FINAL.pdf" target="_blank" rel="noopener">보고서 열기 / Open PDF</a>
-    <div class="meta">
-      PDF 22 pages · Updated 2026-08-27<br>
-      <a href="./report/DSJA_FINAL.pdf" target="_blank" rel="noopener">./report/DSJA_FINAL.pdf</a>
+    <div class="right">
+      <span>DSJA_5 team EDGE · 22 pages · 2026-08-27</span>
+      <a href="./report/DSJA_FINAL.pdf" target="_blank" rel="noopener">PDF</a>
     </div>
-  </main>
+  </header>
+
+  <div id="stage">
+    <img id="slide" alt="slide" draggable="false">
+    <button id="prev" class="nav" aria-label="이전 페이지">‹</button>
+    <button id="next" class="nav" aria-label="다음 페이지">›</button>
+  </div>
+
+  <footer>
+    <button id="bprev" aria-label="이전">◀</button>
+    <input id="range" type="range" min="1" max="22" value="1" aria-label="페이지 이동">
+    <span id="counter">1 / 22</span>
+    <button id="bnext" aria-label="다음">▶</button>
+  </footer>
+
+  <script>
+    (function () {
+      var TOTAL = 22, cur = 1;
+      var slide = document.getElementById('slide'), range = document.getElementById('range'), counter = document.getElementById('counter');
+      var bprev = document.getElementById('bprev'), bnext = document.getElementById('bnext');
+      var cache = {};
+      function src(n) { return './pages/p-' + (n < 10 ? '0' + n : n) + '.webp'; }
+      function preload(n) { if (n >= 1 && n <= TOTAL && !cache[n]) { var i = new Image(); i.src = src(n); cache[n] = i; } }
+      function go(n, push) {
+        n = Math.max(1, Math.min(TOTAL, n | 0));
+        cur = n;
+        slide.src = src(n); slide.alt = 'page ' + n + ' / ' + TOTAL;
+        range.value = n; counter.textContent = n + ' / ' + TOTAL;
+        bprev.disabled = (n === 1); bnext.disabled = (n === TOTAL);
+        if (push !== false) history.replaceState(null, '', '#' + n);
+        preload(n + 1); preload(n + 2); preload(n - 1);
+      }
+      function fromHash() { var h = parseInt(location.hash.slice(1), 10); go(h >= 1 && h <= TOTAL ? h : 1, false); }
+      document.getElementById('prev').onclick = bprev.onclick = function () { go(cur - 1); };
+      document.getElementById('next').onclick = bnext.onclick = function () { go(cur + 1); };
+      range.oninput = function () { go(+range.value); };
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(cur + 1); }
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); go(cur - 1); }
+        else if (e.key === 'Home') go(1); else if (e.key === 'End') go(TOTAL);
+      });
+      var sx = null, sy = null, stage = document.getElementById('stage');
+      stage.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+      stage.addEventListener('touchend', function (e) {
+        if (sx === null) return;
+        var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = sy = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? cur + 1 : cur - 1);
+      }, { passive: true });
+      stage.addEventListener('click', function (e) {
+        if (e.target !== slide) return;
+        var r = slide.getBoundingClientRect(); go(e.clientX - r.left > r.width / 2 ? cur + 1 : cur - 1);
+      });
+      window.addEventListener('hashchange', fromHash);
+      fromHash();
+    })();
+  </script>
 </body>
 </html>
