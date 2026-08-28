@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>DSJA FINAL</title>
-  <meta name="description" content="왜 노인들은 여전히 디지털 사회에서 길을 잃는가? — DSJA_5 team EDGE 최종 보고서">
+  <title>DSJA 5th Final Fold</title>
+  <meta name="description" content="왜 노인들은 여전히 디지털 사회에서 길을 잃는가? — DSJA_5 team EDGE 최종 보고서 (5th Final Fold)">
   <meta name="theme-color" content="#000000">
   <style>
     * { box-sizing: border-box; }
@@ -36,10 +36,10 @@
 </head>
 <body>
   <header>
-    <h1>DSJA FINAL</h1>
+    <h1>DSJA 5th Final Fold</h1>
     <div class="right">
-      <span>DSJA_5 team EDGE · 22 pages · 2026-08-27</span>
-      <a href="./report/DSJA_FINAL.pdf" target="_blank" rel="noopener">PDF</a>
+      <span>DSJA_5 team EDGE · 31 pages · 2026-08-28</span>
+      <a href="./report/DSJA_5th_final_fold.pdf" target="_blank" rel="noopener">PDF</a>
     </div>
   </header>
 
@@ -51,20 +51,20 @@
 
   <footer>
     <button id="bprev" aria-label="이전">◀</button>
-    <input id="range" type="range" min="1" max="22" value="1" aria-label="페이지 이동">
-    <span id="counter">1 / 22</span>
+    <input id="range" type="range" min="1" max="31" value="1" aria-label="페이지 이동">
+    <span id="counter">1 / 31</span>
     <button id="bnext" aria-label="다음">▶</button>
   </footer>
 
   <script>
     (function () {
-      var TOTAL = 22, cur = 1;
+      var TOTAL = 31, cur = 1;
       var slide = document.getElementById('slide'), range = document.getElementById('range'), counter = document.getElementById('counter');
       var bprev = document.getElementById('bprev'), bnext = document.getElementById('bnext');
       var cache = {};
       function pad(n) { return n < 10 ? '0' + n : '' + n; }
       function src(n) { return './pages/p-' + pad(n) + '.webp'; }
-      function srcset(n) { return './pages/p-' + pad(n) + '.webp 1920w, ./pages/p-' + pad(n) + '@2x.webp 3840w'; }
+      function srcset(n) { return './pages/p-' + pad(n) + '.webp 3840w, ./pages/p-' + pad(n) + '@2x.webp 5760w'; }
       function preload(n) { if (n >= 1 && n <= TOTAL && !cache[n]) { var i = new Image(); i.sizes = '100vw'; i.srcset = srcset(n); i.src = src(n); cache[n] = i; } }
       function go(n, push) {
         n = Math.max(1, Math.min(TOTAL, n | 0));
